@@ -1,0 +1,3 @@
+en:
+  site_settings:
+    external_system_avatars_url: "URL of the external system avatars service. Allowed substitutions are {username} {first_letter} {name_first_letter} {first_emoji} {color} {size}"
