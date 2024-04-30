@@ -35,6 +35,14 @@ RSpec.describe User do
           )
         end
       end
+      describe "with invalid name character" do
+        let!(:user_bahut) { Fabricate(:user, username: "बहुत", name: ":awesome:") }
+        it "uses username" do
+          expect(User.system_avatar_template("बहुत")).to match(
+            %r|/letter_avatar_proxy/v\d/letter/%E0%A4%AC/ea5d25/{size}.png|,
+          )
+        end
+      end
     end
 
     context "with {first_emoji}" do

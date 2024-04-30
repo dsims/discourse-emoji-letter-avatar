@@ -15,11 +15,17 @@ after_initialize do
         username = normalize_username(username)
         # potential performance issue to find user?
         user = User.find_by_username(username)
+        name = normalize_username(user.name) if user
         # use first character in name/username if no emoji or to set {name_first_letter}
         name_first_letter =
           (
-            if (user && user.name.present?)
-              UrlHelper.encode_component(normalize_username(user.name).grapheme_clusters.first)
+            if (
+                 name.present? &&
+                   !UsernameValidator::UNICODE_INVALID_CHAR_PATTERN.match?(
+                     name.grapheme_clusters.first,
+                   )
+               )
+              UrlHelper.encode_component(name.grapheme_clusters.first)
             else
               UrlHelper.encode_component(username.grapheme_clusters.first)
             end
@@ -28,7 +34,7 @@ after_initialize do
         if url.include?("{first_emoji}")
           return url.gsub("{first_emoji}", name_first_letter) unless user
           first_emoji =
-            [user.name, user.user_profile&.bio_raw].lazy
+            [name, user.user_profile&.bio_raw].lazy
               .filter_map do |str|
                 str = Emoji.gsub_emoji_to_unicode(str)
                 str ? (str.grapheme_clusters & Emoji.unicode_replacements.keys).first : nil
