@@ -1,0 +1,4 @@
+discourse_emoji_letter_avatar:
+  emoji_letter_avatar_enabled:
+    default: false
+    client: true

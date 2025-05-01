@@ -6,10 +6,13 @@
 # authors: dsims
 # url: https://github.com/dsims/discourse-emoji-letter-avatar
 
+enabled_site_setting :emoji_letter_avatar_enabled
+
 after_initialize do
   module EmojiLetterName
     def system_avatar_template(username)
       url = super(username) # uses first character in username to set {first_letter}
+      return url unless SiteSetting.emoji_letter_avatar_enabled
       # find user to check name and bio
       if %w[{name_first_letter} {first_emoji}].any? { |s| url.include?(s) }
         username = normalize_username(username)

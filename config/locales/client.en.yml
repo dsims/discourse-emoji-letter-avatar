@@ -1,0 +1,9 @@
+en:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          discourse_emoji_letter_avatar: "Emoji Letter Avatars"
+  js:
+    discourse_emoji_letter_avatar:
+      placeholder: placeholder

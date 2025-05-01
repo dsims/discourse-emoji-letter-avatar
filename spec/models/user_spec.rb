@@ -4,6 +4,7 @@ RSpec.describe User do
   before do
     SiteSetting.unicode_usernames = true
     SiteSetting.external_system_avatars_enabled = true
+    SiteSetting.emoji_letter_avatar_enabled = true
   end
   let!(:user) { Fabricate(:user, username: "Lo\u0308we", name: "Francis") }
   let!(:user_bahut) { Fabricate(:user, username: "बहुत", name: "Bob") }
